@@ -11,6 +11,7 @@ public interface responseConstants {
 
         Integer ADD_BOOK_FAILED=5;
 
+        Integer AUTHOR_DELETE_FAILED=6;
 
     }
 

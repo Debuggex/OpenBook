@@ -79,5 +79,21 @@ public class authorController {
 
     }
 
+    @DeleteMapping("/delete")
+    public @ResponseBody Response<profileResponse> deleteAuthor(@RequestBody @Validated loginDTO loginDTO){
+
+        Response<profileResponse> response=new Response<>();
+        profileResponse profileResponse= AuthorService.deleteAuthor(loginDTO);
+        if (profileResponse!=null){
+            response.setResponseCode(1);
+            response.setResponseBody(profileResponse);
+            response.setResponseMessage("Author has been deleted Successfully!!");
+        }else {
+            response.setResponseCode(responseConstants.ResponseCodes.AUTHOR_DELETE_FAILED);
+            response.setResponseMessage("We couldn't find any User with Provided Email");
+        }
+        return response;
+    }
+
 
 }

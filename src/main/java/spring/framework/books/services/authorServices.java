@@ -68,6 +68,7 @@ public class authorServices {
     public profileResponse findByEmail(String email){
         Optional<Author> author=AUTHOR_RESPOSITORY.findAll().stream().filter(author1 -> author1.getEmail().equals(email)).findFirst();
         profileResponse profileResponse=new profileResponse();
+
         profileResponse.setId(author.get().getId());
         profileResponse.setName(author.get().getName());
         profileResponse.setDateOfBirth(author.get().getDateOfBirth().toString());
@@ -94,5 +95,21 @@ public class authorServices {
         }
         loginResponse.setLoginTime(new Date().toString());
         return loginResponse;
+    }
+
+    public profileResponse deleteAuthor(loginDTO loginDTO){
+        Optional<Author> author=AUTHOR_RESPOSITORY.findAll().stream().filter(
+                author1 -> author1.getEmail().equals(loginDTO.getEmail())
+        ).findFirst();
+
+        if (author.isPresent()){
+            AUTHOR_RESPOSITORY.deleteById(author.get().getId());
+            profileResponse profileResponse=new profileResponse();
+            profileResponse.setEmail(author.get().getEmail());
+            profileResponse.setName(author.get().getName());
+            profileResponse.setPublishedBooks(author.get().getPublishedBooks());
+            return profileResponse;
+        }
+        return null;
     }
 }
