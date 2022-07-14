@@ -8,6 +8,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import spring.framework.books.classes.TypesOfUsers;
+import spring.framework.books.repositories.RoleRepository;
 
 import javax.transaction.Transactional;
 import java.io.File;
@@ -43,8 +45,6 @@ public class OnStartup implements ApplicationListener<ContextRefreshedEvent>, En
                 throw new RuntimeException(e);
             }
         }
-
-
 
     }
 

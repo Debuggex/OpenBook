@@ -3,9 +3,6 @@ package spring.framework.books.requestDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import spring.framework.books.classes.Book;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,6 +19,8 @@ public class signUpDTO {
     private String email;
 
     private String password;
+
+    private String typeOfUser;
 
 
 }

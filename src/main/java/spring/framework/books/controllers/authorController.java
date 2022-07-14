@@ -61,23 +61,23 @@ public class authorController {
 
     }
 
-    @PostMapping("/login")
-    public @ResponseBody Response<loginResponse> logIn(@RequestBody @Validated loginDTO loginDTO){
-
-        Response<loginResponse> response=new Response<>();
-        loginResponse loginResponse=AuthorService.loginAuthor(loginDTO);
-        if (loginResponse.getToken()!=null){
-            response.setResponseCode(1);
-            response.setResponseMessage("User Login Successfully");
-            response.setResponseBody(loginResponse);
-        }else {
-            response.setResponseCode(responseConstants.ResponseCodes.LOGIN_FAILED);
-            response.setResponseMessage("provided Credentials did not match to any record");
-            response.setResponseBody(null);
-        }
-        return response;
-
-    }
+//    @PostMapping("/login")
+//    public @ResponseBody Response<loginResponse> logIn(@RequestBody @Validated loginDTO loginDTO){
+//
+//        Response<loginResponse> response=new Response<>();
+//        loginResponse loginResponse=AuthorService.loginAuthor(loginDTO);
+//        if (loginResponse.getToken()!=null){
+//            response.setResponseCode(1);
+//            response.setResponseMessage("User Login Successfully");
+//            response.setResponseBody(loginResponse);
+//        }else {
+//            response.setResponseCode(responseConstants.ResponseCodes.LOGIN_FAILED);
+//            response.setResponseMessage("provided Credentials did not match to any record");
+//            response.setResponseBody(null);
+//        }
+//        return response;
+//
+//    }
 
     @DeleteMapping("/delete")
     public @ResponseBody Response<profileResponse> deleteAuthor(@RequestBody @Validated loginDTO loginDTO){

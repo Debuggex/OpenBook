@@ -32,14 +32,23 @@ public class Author {
     private String password;
 
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", fetch = FetchType.EAGER)
     private Set<Book> publishedBooks=new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", fetch = FetchType.EAGER)
+    private Set<TypesOfUsers> typesOfUsers=new HashSet<>();
 
     private String fileUri;
 
     public Author addBook(Book book){
         book.setAuthor(this);
         this.publishedBooks.add(book);
+        return this;
+    }
+
+    public Author addType(TypesOfUsers typesOfUsers){
+        typesOfUsers.setAuthor(this);
+        this.typesOfUsers.add(typesOfUsers);
         return this;
     }
 

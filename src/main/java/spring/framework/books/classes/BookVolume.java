@@ -33,4 +33,6 @@ public class BookVolume {
     @JoinColumn(name="volumeCode")
     @JsonIgnore
     private Book bookId;
+
+
 }
