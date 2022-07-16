@@ -2,11 +2,10 @@ package spring.framework.books.responseDTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import spring.framework.books.requestDTO.loginDTO;
 
 @Getter
 @Setter
-public class loginResponse {
+public class LoginResponse {
 
     private String token;
     private String loginTime;

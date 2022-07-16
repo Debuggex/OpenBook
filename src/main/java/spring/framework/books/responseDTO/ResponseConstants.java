@@ -1,6 +1,6 @@
 package spring.framework.books.responseDTO;
 
-public interface responseConstants {
+public interface ResponseConstants {
 
     public interface ResponseCodes{
 

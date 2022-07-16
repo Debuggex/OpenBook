@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class signUpDTO {
+public class SignUpDTO {
 
 
     private String name;

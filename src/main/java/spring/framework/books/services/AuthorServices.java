@@ -11,12 +11,12 @@ import spring.framework.books.classes.Author;
 import spring.framework.books.classes.Book;
 import spring.framework.books.classes.TypesOfUsers;
 import spring.framework.books.repositories.RoleRepository;
-import spring.framework.books.repositories.authorRespository;
-import spring.framework.books.requestDTO.loginDTO;
-import spring.framework.books.requestDTO.signUpDTO;
-import spring.framework.books.responseDTO.loginResponse;
-import spring.framework.books.responseDTO.profileResponse;
-import spring.framework.books.responseDTO.signUpResponse;
+import spring.framework.books.repositories.AuthorRespository;
+import spring.framework.books.requestDTO.LoginDTO;
+import spring.framework.books.requestDTO.SignUpDTO;
+import spring.framework.books.responseDTO.LoginResponse;
+import spring.framework.books.responseDTO.ProfileResponse;
+import spring.framework.books.responseDTO.SignUpResponse;
 import spring.framework.books.security.loginSecurity;
 
 import java.text.ParseException;
@@ -25,24 +25,24 @@ import java.util.*;
 
 @Service
 @Slf4j
-public class authorServices implements UserDetailsService {
+public class AuthorServices implements UserDetailsService {
 
 
-    private final authorRespository AUTHOR_RESPOSITORY;
+    private final AuthorRespository AUTHOR_RESPOSITORY;
     private final PasswordEncoder passwordEncoder;
 
     private final RoleRepository roleRepository;
 
-    public authorServices(authorRespository author_respository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
+    public AuthorServices(AuthorRespository author_respository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         AUTHOR_RESPOSITORY = author_respository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
     }
 
 
-    public signUpResponse newUser(signUpDTO signUpDTO) throws ParseException {
+    public SignUpResponse newUser(SignUpDTO signUpDTO) throws ParseException {
 
-       signUpResponse signUpResponse=new signUpResponse();
+       SignUpResponse signUpResponse=new SignUpResponse();
        Optional<spring.framework.books.classes.Author> author= AUTHOR_RESPOSITORY.findAll().stream().filter(author1 -> author1.getEmail().equals(signUpDTO.getEmail())).findFirst();
        if (author.isEmpty()){
 
@@ -87,9 +87,9 @@ public class authorServices implements UserDetailsService {
 
 
 
-    public profileResponse findByEmail(String email){
+    public ProfileResponse findByEmail(String email){
         Optional<Author> author=AUTHOR_RESPOSITORY.findAll().stream().filter(author1 -> author1.getEmail().equals(email)).findFirst();
-        profileResponse profileResponse=new profileResponse();
+        ProfileResponse profileResponse=new ProfileResponse();
 
         profileResponse.setId(author.get().getId());
         profileResponse.setName(author.get().getName());
@@ -106,9 +106,9 @@ public class authorServices implements UserDetailsService {
 
     }
 
-    public loginResponse loginAuthor(loginDTO loginDTO){
+    public LoginResponse loginAuthor(LoginDTO loginDTO){
         Optional<Author> author=AUTHOR_RESPOSITORY.findAll().stream().filter(author1 -> author1.getEmail().equals(loginDTO.getEmail())).findFirst();
-        loginResponse loginResponse=new loginResponse();
+        LoginResponse loginResponse=new LoginResponse();
         loginSecurity loginSecurity=new loginSecurity();
         if (author.isPresent()){
             if (loginSecurity.verifyToken(author.get().getPassword()).equals(loginDTO.getPassword())){
@@ -119,14 +119,14 @@ public class authorServices implements UserDetailsService {
         return loginResponse;
     }
 
-    public profileResponse deleteAuthor(loginDTO loginDTO){
+    public ProfileResponse deleteAuthor(LoginDTO loginDTO){
         Optional<Author> author=AUTHOR_RESPOSITORY.findAll().stream().filter(
                 author1 -> author1.getEmail().equals(loginDTO.getEmail())
         ).findFirst();
 
         if (author.isPresent()){
             AUTHOR_RESPOSITORY.deleteById(author.get().getId());
-            profileResponse profileResponse=new profileResponse();
+            ProfileResponse profileResponse=new ProfileResponse();
             profileResponse.setEmail(author.get().getEmail());
             profileResponse.setName(author.get().getName());
             profileResponse.setPublishedBooks(author.get().getPublishedBooks());

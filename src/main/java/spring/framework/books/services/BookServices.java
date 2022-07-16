@@ -8,9 +8,9 @@ import spring.framework.books.classes.Author;
 import spring.framework.books.classes.Book;
 import spring.framework.books.classes.BookVolume;
 import spring.framework.books.repositories.BookVolumeRespository;
-import spring.framework.books.repositories.authorRespository;
-import spring.framework.books.repositories.bookRespository;
-import spring.framework.books.requestDTO.addBookDTO;
+import spring.framework.books.repositories.AuthorRespository;
+import spring.framework.books.repositories.BookRespository;
+import spring.framework.books.requestDTO.AddBookDTO;
 import spring.framework.books.responseDTO.AddBookResponse;
 
 import javax.transaction.Transactional;
@@ -27,24 +27,24 @@ import java.util.*;
 
 
 @Service
-public class bookServices {
+public class BookServices {
 
 
-    private final bookRespository bookRespository;
-    private final authorRespository authorRespository;
+    private final BookRespository bookRespository;
+    private final AuthorRespository authorRespository;
 
     private final BookVolumeRespository bookVolumeRespository;
 
     private Path foundfile;
 
-    public bookServices(spring.framework.books.repositories.bookRespository bookRespository, spring.framework.books.repositories.authorRespository authorRespository, BookVolumeRespository bookVolumeRespository) {
+    public BookServices(BookRespository bookRespository, AuthorRespository authorRespository, BookVolumeRespository bookVolumeRespository) {
         this.bookRespository = bookRespository;
         this.authorRespository = authorRespository;
         this.bookVolumeRespository = bookVolumeRespository;
     }
 
     @Transactional
-    public AddBookResponse addBook(addBookDTO addBookDTO, MultipartFile multipartFile) throws ParseException, IOException {
+    public AddBookResponse addBook(AddBookDTO addBookDTO, MultipartFile multipartFile) throws ParseException, IOException {
 
         AddBookResponse addBookResponse=new AddBookResponse();
 

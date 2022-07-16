@@ -1,11 +1,11 @@
 package spring.framework.books.security;
 
-import spring.framework.books.requestDTO.loginDTO;
+import spring.framework.books.requestDTO.LoginDTO;
 
 public class loginSecurity {
 
 
-    public String generateToken(loginDTO loginDTO){
+    public String generateToken(LoginDTO loginDTO){
         String email=loginDTO.getEmail();
         String password=loginDTO.getPassword();
         StringBuilder temp= new StringBuilder();

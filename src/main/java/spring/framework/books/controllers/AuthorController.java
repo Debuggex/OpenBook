@@ -2,40 +2,37 @@ package spring.framework.books.controllers;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import spring.framework.books.classes.Author;
-import spring.framework.books.requestDTO.loginDTO;
-import spring.framework.books.requestDTO.signUpDTO;
-import spring.framework.books.requestDTO.profileDTO;
+import spring.framework.books.requestDTO.LoginDTO;
+import spring.framework.books.requestDTO.SignUpDTO;
+import spring.framework.books.requestDTO.ProfileDTO;
 import spring.framework.books.responseDTO.*;
-import spring.framework.books.security.loginSecurity;
-import spring.framework.books.services.authorServices;
+import spring.framework.books.services.AuthorServices;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 @RestController
 @RequestMapping("/author")
-public class authorController {
+public class AuthorController {
 
-    private final authorServices AuthorService;
+    private final AuthorServices AuthorService;
 
-    public authorController(authorServices authorService) {
+    public AuthorController(AuthorServices authorService) {
         AuthorService = authorService;
     }
 
     @PostMapping("/register")
-    public @ResponseBody Response<signUpResponse> addAuthor(@RequestBody @Validated signUpDTO signUpDTO) throws ParseException {
+    public @ResponseBody Response<SignUpResponse> addAuthor(@RequestBody @Validated SignUpDTO signUpDTO) throws ParseException {
 
-        Response<signUpResponse> response=new Response<>();
+        Response<SignUpResponse> response=new Response<>();
 
-        signUpResponse save=AuthorService.newUser(signUpDTO);
+        SignUpResponse save=AuthorService.newUser(signUpDTO);
         if (save!=null){
             response.setResponseCode(1);
             response.setResponseMessage("Your Email has been Registered Successfully!!");
             response.setResponseBody(save);
         }else {
 
-            response.setResponseCode(responseConstants.ResponseCodes.SIGNUP_FAILED);
+            response.setResponseCode(ResponseConstants.ResponseCodes.SIGNUP_FAILED);
             response.setResponseMessage("Your Email is already Registered!");
             response.setResponseBody(null);
         }
@@ -44,16 +41,16 @@ public class authorController {
     }
 
     @GetMapping("/profile")
-    public @ResponseBody Response<profileResponse> getProfileDate(@RequestBody @Validated profileDTO email){
+    public @ResponseBody Response<ProfileResponse> getProfileDate(@RequestBody @Validated ProfileDTO email){
 
-        Response<profileResponse> response=new Response<>();
-        profileResponse profileResponse=AuthorService.findByEmail(email.getEmail());
+        Response<ProfileResponse> response=new Response<>();
+        ProfileResponse profileResponse=AuthorService.findByEmail(email.getEmail());
         if (profileResponse!=null){
             response.setResponseCode(1);
             response.setResponseMessage("Data Fetched Successfully!!!");
             response.setResponseBody(profileResponse);
         }else {
-            response.setResponseCode(responseConstants.ResponseCodes.PROFILE_DATA_FAILED);
+            response.setResponseCode(ResponseConstants.ResponseCodes.PROFILE_DATA_FAILED);
             response.setResponseBody(null);
             response.setResponseMessage("No Data Found with provided Credentials");
         }
@@ -80,16 +77,16 @@ public class authorController {
 //    }
 
     @DeleteMapping("/delete")
-    public @ResponseBody Response<profileResponse> deleteAuthor(@RequestBody @Validated loginDTO loginDTO){
+    public @ResponseBody Response<ProfileResponse> deleteAuthor(@RequestBody @Validated LoginDTO loginDTO){
 
-        Response<profileResponse> response=new Response<>();
-        profileResponse profileResponse= AuthorService.deleteAuthor(loginDTO);
+        Response<ProfileResponse> response=new Response<>();
+        ProfileResponse profileResponse= AuthorService.deleteAuthor(loginDTO);
         if (profileResponse!=null){
             response.setResponseCode(1);
             response.setResponseBody(profileResponse);
             response.setResponseMessage("Author has been deleted Successfully!!");
         }else {
-            response.setResponseCode(responseConstants.ResponseCodes.AUTHOR_DELETE_FAILED);
+            response.setResponseCode(ResponseConstants.ResponseCodes.AUTHOR_DELETE_FAILED);
             response.setResponseMessage("We couldn't find any User with Provided Email");
         }
         return response;
