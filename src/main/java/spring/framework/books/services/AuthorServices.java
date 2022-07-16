@@ -99,7 +99,7 @@ public class AuthorServices implements UserDetailsService {
         books.addAll(author.get().getPublishedBooks());
         profileResponse.setPublishedBooks(books);
         profileResponse.setAccountCreationDate(author.get().getAccountCreationDate().toString());
-        profileResponse.setPassword(new loginSecurity().verifyToken(author.get().getPassword()));
+        profileResponse.setPassword(author.get().getPassword());
 
 
         return profileResponse;
