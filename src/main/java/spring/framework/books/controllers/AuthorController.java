@@ -2,6 +2,7 @@ package spring.framework.books.controllers;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import spring.framework.books.filter.RequestFilter;
 import spring.framework.books.requestDTO.LoginDTO;
 import spring.framework.books.requestDTO.SignUpDTO;
 import spring.framework.books.requestDTO.ProfileDTO;
@@ -15,6 +16,8 @@ import java.text.ParseException;
 public class AuthorController {
 
     private final AuthorServices AuthorService;
+
+    private final RequestFilter requestFilter=new RequestFilter();
 
     public AuthorController(AuthorServices authorService) {
         AuthorService = authorService;
@@ -41,9 +44,15 @@ public class AuthorController {
     }
 
     @GetMapping("/profile")
-    public @ResponseBody Response<ProfileResponse> getProfileDate(@RequestBody @Validated ProfileDTO email){
+    public @ResponseBody Response<ProfileResponse> getProfileDate(@RequestBody @Validated ProfileDTO email,@RequestHeader(value="Authorization") String auth){
+
 
         Response<ProfileResponse> response=new Response<>();
+        if (!requestFilter.getAuthorize(email.getEmail(), auth)){
+            response.setResponseCode(0);
+            response.setResponseMessage("Non-Authorize Access!");
+            return response;
+        }
         ProfileResponse profileResponse=AuthorService.findByEmail(email.getEmail());
         if (profileResponse!=null){
             response.setResponseCode(1);
@@ -77,9 +86,14 @@ public class AuthorController {
 //    }
 
     @DeleteMapping("/delete")
-    public @ResponseBody Response<ProfileResponse> deleteAuthor(@RequestBody @Validated LoginDTO loginDTO){
+    public @ResponseBody Response<ProfileResponse> deleteAuthor(@RequestBody @Validated LoginDTO loginDTO, @RequestHeader(value="Authorization") String auth){
 
         Response<ProfileResponse> response=new Response<>();
+        if (!requestFilter.getAuthorize(loginDTO.getEmail(), auth)){
+            response.setResponseCode(0);
+            response.setResponseMessage("Non-Authorize Access!");
+            return response;
+        }
         ProfileResponse profileResponse= AuthorService.deleteAuthor(loginDTO);
         if (profileResponse!=null){
             response.setResponseCode(1);
