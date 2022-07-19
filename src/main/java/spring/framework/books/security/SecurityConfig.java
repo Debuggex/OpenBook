@@ -47,6 +47,10 @@ public class SecurityConfig {
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/author/register/**").permitAll();
         http.authorizeRequests().antMatchers("/author/login/**").permitAll();
         http.authorizeRequests().antMatchers("/dashboard/**").permitAll();
+        http.authorizeRequests().antMatchers("/v2/api-docs/**").permitAll();
+        http.authorizeRequests().antMatchers("/swagger-resources/**").permitAll();
+        http.authorizeRequests().antMatchers("/swagger-ui.html/**").permitAll();
+        http.authorizeRequests().antMatchers("/swagger-ui/**").permitAll();
 
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/author/**").hasAnyAuthority("Author");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/author/**").hasAnyAuthority("Author");

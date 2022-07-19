@@ -1,5 +1,7 @@
 package spring.framework.books.controllers;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import spring.framework.books.filter.RequestFilter;
@@ -11,6 +13,7 @@ import spring.framework.books.services.AuthorServices;
 
 import java.text.ParseException;
 
+@Api(description = "Author Controller responsible for Signing Up, Getting profile data, or Deleting Author Profile")
 @RestController
 @RequestMapping("/author")
 public class AuthorController {
@@ -23,6 +26,7 @@ public class AuthorController {
         AuthorService = authorService;
     }
 
+    @ApiOperation(value = "This will register an Author to Database")
     @PostMapping("/register")
     public @ResponseBody Response<SignUpResponse> addAuthor(@RequestBody @Validated SignUpDTO signUpDTO) throws ParseException {
 
@@ -43,6 +47,7 @@ public class AuthorController {
 
     }
 
+    @ApiOperation(value = "This will return the Author's Profile Data")
     @GetMapping("/profile")
     public @ResponseBody Response<ProfileResponse> getProfileDate(@RequestBody @Validated ProfileDTO email,@RequestHeader(value="Authorization") String auth){
 
@@ -85,6 +90,7 @@ public class AuthorController {
 //
 //    }
 
+    @ApiOperation(value = "This is will delete the Author's Profile permanently")
     @DeleteMapping("/delete")
     public @ResponseBody Response<ProfileResponse> deleteAuthor(@RequestBody @Validated LoginDTO loginDTO, @RequestHeader(value="Authorization") String auth){
 
