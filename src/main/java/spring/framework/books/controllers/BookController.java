@@ -2,6 +2,7 @@ package spring.framework.books.controllers;
 
 
 import com.google.gson.Gson;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -30,6 +31,17 @@ public class BookController {
         this.bookServices = bookServices;
     }
 
+    @ApiOperation(value = "The String bookData Parameter will be a String but in JSON format" +
+            "\n " +
+            "Like this : \n" +
+            "{" +
+            "String : bookName, \n" +
+            "String : serialNumber, \n" +
+            "String : bookPublishedDate, \n" +
+            "String : bookVolume, \n" +
+            "String : bookType, \n" +
+            "Long : authorId \n" +
+            "}")
     @PostMapping(value = "/add",consumes =  "multipart/form-data" )
     public Response<AddBookResponse> addBook(@RequestParam ("bookData") String bookData, @RequestParam("file")MultipartFile multipartFile) throws ParseException, IOException, JSONException {
 
