@@ -1,28 +1,20 @@
 package spring.framework.books.controllers;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.TreeTraversingParser;
 import com.google.gson.Gson;
-import org.apache.commons.io.FileUtils;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import spring.framework.books.classes.Book;
 import spring.framework.books.requestDTO.DownloadBookDTO;
-import spring.framework.books.requestDTO.addBookDTO;
+import spring.framework.books.requestDTO.AddBookDTO;
 import spring.framework.books.responseDTO.AddBookResponse;
 import spring.framework.books.responseDTO.Response;
-import spring.framework.books.responseDTO.responseConstants;
-import spring.framework.books.services.bookServices;
+import spring.framework.books.services.BookServices;
 
-import java.awt.*;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -30,21 +22,32 @@ import java.text.ParseException;
 
 @RestController
 @RequestMapping("/book")
-public class bookController {
+public class BookController {
 
-    private final bookServices bookServices;
+    private final BookServices bookServices;
 
 
-    public bookController(spring.framework.books.services.bookServices bookServices) {
+    public BookController(BookServices bookServices) {
         this.bookServices = bookServices;
     }
 
+    @ApiOperation(value = "The String bookData Parameter will be a String but in JSON format" +
+            "\n " +
+            "Like this : \n" +
+            "{" +
+            "String : bookName, \n" +
+            "String : serialNumber, \n" +
+            "String : bookPublishedDate, \n" +
+            "String : bookVolume, \n" +
+            "String : bookType, \n" +
+            "Long : authorId \n" +
+            "}")
     @PostMapping(value = "/add",consumes =  "multipart/form-data" )
     public Response<AddBookResponse> addBook(@RequestParam ("bookData") String bookData, @RequestParam("file")MultipartFile multipartFile) throws ParseException, IOException, JSONException {
 
 
         Gson gson=new Gson();
-        addBookDTO addBookDTO=gson.fromJson(bookData, spring.framework.books.requestDTO.addBookDTO.class);
+        AddBookDTO addBookDTO=gson.fromJson(bookData, AddBookDTO.class);
         Response<AddBookResponse> response=new Response<>();
 
         AddBookResponse addBookResponse = bookServices.addBook(addBookDTO, multipartFile);

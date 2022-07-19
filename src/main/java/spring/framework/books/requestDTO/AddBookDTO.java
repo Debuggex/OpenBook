@@ -3,12 +3,11 @@ package spring.framework.books.requestDTO;
 
 import lombok.Getter;
 import lombok.Setter;
-import spring.framework.books.classes.BookVolume;
 
 
 @Getter
 @Setter
-public class addBookDTO {
+public class AddBookDTO {
 
     private String bookName;
 
