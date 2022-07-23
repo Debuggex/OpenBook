@@ -1,0 +1,1 @@
+web: java -jar target/Books-0.0.1-SNAPSHOT.jar
